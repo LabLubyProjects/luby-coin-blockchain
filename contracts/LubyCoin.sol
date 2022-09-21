@@ -14,7 +14,12 @@ contract LubyCoin is Ownable, Pausable, ERC20 {
         _mint(msg.sender, _initialSupply);
     }
 
-    function makeVip(address _newVip) private onlyOwner {
+    function makeVip(address _newVip) public onlyOwner {
         _vips[_newVip] = true;
+    }
+
+    function setTax(uint256 _newTax) public onlyOwner {
+        require(_newTax >= 0, "LubyCoin: Tax can't be negative");
+        _tax = _newTax;
     }
 }
