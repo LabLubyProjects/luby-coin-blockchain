@@ -21,6 +21,15 @@ contract LubyCoin is Ownable, Pausable, ERC20 {
         _;
     }
 
+    function pause() public onlyOwner {
+        _pause();
+    }
+
+    function unpause() public onlyOwner {
+        _unpause();
+    }
+
+
     function makeVip(address _newVip) public onlyOwner {
         _vips[_newVip] = true;
     }
