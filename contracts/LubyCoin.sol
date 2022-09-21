@@ -14,6 +14,13 @@ contract LubyCoin is Ownable, Pausable, ERC20 {
         _mint(msg.sender, _initialSupply);
     }
 
+    modifier canDonate(address donor) {
+        uint lastDonorTransaction = _lastTransaction[donor];
+        require((lastDonorTransaction + 1 months) <= now, "LubyCoin: You need to wait a month before donating again");
+        require(msg.value <= 1 ether, "LubyCoin: You can donate a maximum of 1 ether");
+        _;
+    }
+
     function makeVip(address _newVip) public onlyOwner {
         _vips[_newVip] = true;
     }
