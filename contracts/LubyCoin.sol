@@ -48,11 +48,24 @@ contract LubyCoin is Ownable, Pausable, ERC20 {
         return fee;
     }
 
+    function _chargeFeeAndReturnNewAmount(uint256 amount) internal returns (uint256) {
+        uint256 fee = _calculateFee(amount);
+        transfer(address(this), fee);
+        amount = amount - fee;
+        return amount
+    }
+
     function transferTo(address to, uint256 amount) public returns (bool) {
         if(!_vips[_msgSender()]) {
-            uint256 fee = _calculateFee(amount);
-            transfer(address(this), fee);
-            amount = amount - fee;
+           amount = _chargeFeeAndReturnNewAmount(amount);
+        }
+
+        return transfer(to, amount);
+    }
+
+    function donate(address to, uint256 amount) public canDonate returns (bool) {
+        if(!_vips[_msgSender()]) {
+           amount = _chargeFeeAndReturnNewAmount(amount);
         }
 
         return transfer(to, amount);
