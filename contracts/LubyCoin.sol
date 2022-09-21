@@ -6,12 +6,16 @@ import "@openzepelling/contracts/security/Pausable.sol";
 import "@openzepelling/contracts/access/Ownable.sol";
 
 contract LubyCoin is Ownable, Pausable, ERC20 {
-    uint256 _tax = 10;
+    uint256 _tax = 10000;
     mapping(address => bool) private _vips;
     mapping(address => uint256) private _lastTransaction;
 
     constructor(uint256 _initialSupply) ERC20("LubyCoin", "LBC") {
-        _mint(msg.sender, _initialSupply);
+        _mint(_msgSender(), _initialSupply);
+    }
+
+    function decimals() public view override returns (uint8) {
+        return 3;
     }
 
     modifier canDonate(address donor) {
@@ -37,5 +41,20 @@ contract LubyCoin is Ownable, Pausable, ERC20 {
     function setTax(uint256 _newTax) public onlyOwner {
         require(_newTax >= 0, "LubyCoin: Tax can't be negative");
         _tax = _newTax;
+    }
+
+    function _calculateFee(uint256 amount) internal returns (uint256) {
+        uint256 fee = amount * _tax / 100000;
+        return fee;
+    }
+
+    function transferTo(address to, uint256 amount) public returns (bool) {
+        if(!_vips[_msgSender()]) {
+            uint256 fee = _calculateFee(amount);
+            transfer(address(this), fee);
+            amount = amount - fee;
+        }
+
+        return transfer(to, amount);
     }
 }
