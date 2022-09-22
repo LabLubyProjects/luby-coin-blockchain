@@ -70,4 +70,9 @@ contract LubyCoin is Ownable, Pausable, ERC20 {
 
         return transfer(to, amount);
     }
+
+    function withdrawAll() internal onlyOwner {
+        address self = address(this); 
+        transfer(self, _balance(self));
+    }
 }
