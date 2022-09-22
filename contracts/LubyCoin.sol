@@ -5,8 +5,9 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@quant-finance/solidity-datetime/contracts/DateTime.sol";
+import "./TransactionLedger.sol";
 
-contract LubyCoin is ERC20, Ownable, Pausable {
+contract LubyCoin is ERC20, Ownable, Pausable, TransactionLedger {
     using DateTime for uint256;
 
     uint256 _tax = 10000;
@@ -94,5 +95,13 @@ contract LubyCoin is ERC20, Ownable, Pausable {
 
     function withdrawAll() public whenNotPaused onlyOwner {
         transfer(_msgSender(), balanceOf(address(this)));
+    }
+
+    function _afterTokenTransfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal override {
+        recordTransaction(from, to, amount);
     }
 }
