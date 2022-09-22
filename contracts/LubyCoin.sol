@@ -34,23 +34,6 @@ contract LubyCoin is ERC20, Ownable, Pausable {
         _;
     }
 
-    function pause() public onlyOwner {
-        _pause();
-    }
-
-    function unpause() public onlyOwner {
-        _unpause();
-    }
-
-    function makeVip(address _newVip) public onlyOwner {
-        _vips[_newVip] = true;
-    }
-
-    function setTax(uint256 _newTax) public onlyOwner {
-        require(_newTax >= 0, "LubyCoin: Tax can't be negative");
-        _tax = _newTax;
-    }
-
     function _calculateFee(uint256 amount) internal view returns (uint256) {
         uint256 fee = (amount * _tax) / 100000;
         return fee;
@@ -66,7 +49,28 @@ contract LubyCoin is ERC20, Ownable, Pausable {
         return amount;
     }
 
-    function transferTo(address to, uint256 amount) public returns (bool) {
+    function pause() public onlyOwner {
+        _pause();
+    }
+
+    function unpause() public onlyOwner {
+        _unpause();
+    }
+
+    function makeVip(address _newVip) public whenNotPaused onlyOwner {
+        _vips[_newVip] = true;
+    }
+
+    function setTax(uint256 _newTax) public whenNotPaused onlyOwner {
+        require(_newTax >= 0, "LubyCoin: Tax can't be negative");
+        _tax = _newTax;
+    }
+
+    function transferTo(address to, uint256 amount)
+        public
+        whenNotPaused
+        returns (bool)
+    {
         if (!_vips[_msgSender()]) {
             amount = _chargeFeeAndReturnNewAmount(amount);
         }
@@ -77,6 +81,7 @@ contract LubyCoin is ERC20, Ownable, Pausable {
     function donate(address to, uint256 amount)
         public
         payable
+        whenNotPaused
         canDonate(_msgSender())
         returns (bool)
     {
@@ -87,7 +92,7 @@ contract LubyCoin is ERC20, Ownable, Pausable {
         return transfer(to, amount);
     }
 
-    function withdrawAll() internal onlyOwner {
+    function withdrawAll() public whenNotPaused onlyOwner {
         transfer(_msgSender(), balanceOf(address(this)));
     }
 }
