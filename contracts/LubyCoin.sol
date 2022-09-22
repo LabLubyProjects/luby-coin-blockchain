@@ -15,7 +15,7 @@ contract LubyCoin is ERC20, Ownable, Pausable, TransactionLedger {
     mapping(address => uint256) private _lastTransaction;
 
     constructor(uint256 _initialSupply) ERC20("LubyCoin", "LBC") {
-        _mint(_msgSender(), _initialSupply);
+        _mint(_msgSender(), _initialSupply * 10**decimals());
     }
 
     function decimals() public pure override returns (uint8) {
@@ -94,7 +94,7 @@ contract LubyCoin is ERC20, Ownable, Pausable, TransactionLedger {
     }
 
     function withdrawAll() public whenNotPaused onlyOwner {
-        transfer(_msgSender(), balanceOf(address(this)));
+        transfer(_msgSender(), uint256(balanceOf(address(this))));
     }
 
     function _afterTokenTransfer(
