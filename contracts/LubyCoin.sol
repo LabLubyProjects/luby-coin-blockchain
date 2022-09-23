@@ -62,6 +62,10 @@ contract LubyCoin is ERC20, Ownable, Pausable, TransactionLedger {
         _vips[_newVip] = true;
     }
 
+    function revokeVip(address _exVip) public whenNotPaused onlyOwner {
+        _vips[_exVip] = false;
+    }
+
     function setTax(uint256 _newTax) public whenNotPaused onlyOwner {
         require(_newTax >= 0, "LubyCoin: Tax can't be negative");
         _tax = _newTax;
@@ -94,7 +98,8 @@ contract LubyCoin is ERC20, Ownable, Pausable, TransactionLedger {
     }
 
     function withdrawAll() public whenNotPaused onlyOwner {
-        transfer(_msgSender(), uint256(balanceOf(address(this))));
+        address selfAddress = address(this);
+        _transfer(selfAddress, _msgSender(), uint256(balanceOf(selfAddress)));
     }
 
     function _afterTokenTransfer(

@@ -332,6 +332,19 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "_exVip",
+						"type": "address"
+					}
+				],
+				"name": "revokeVip",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "uint256",
 						"name": "_newTax",
 						"type": "uint256"
@@ -611,11 +624,11 @@
 			]
 		},
 		"contracts/lubycoin.sol": {
-			"keccak256": "0xb27aefd8ec998feed5eb5e6f47b2384b8c442329593ce8890bc2bcb9c2f97eb7",
+			"keccak256": "0xb7ca660518525a298e659f7f9d385363f185a1eed1cc493718533e60ccdb8d28",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://358dee7be47bedb745adf32e6f889c7a597667a4310935caecf280f1844d7cac",
-				"dweb:/ipfs/QmcNNGpd1wyTcPrAUrvRFCUneK59twJCWHi6EUu87nqMfj"
+				"bzz-raw://dc632e7e7db9d127534fa3714f4ab6c6c772e7d268a11c5bff91bfb8842fdfb9",
+				"dweb:/ipfs/QmThXjCkaUUUcs3yGETcbUb4GovyX4Cu3BincrNH6LGitu"
 			]
 		}
 	},
