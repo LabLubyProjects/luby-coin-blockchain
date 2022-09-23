@@ -22,15 +22,15 @@ contract LubyCoin is ERC20, Ownable, Pausable, TransactionLedger {
         return 3;
     }
 
-    modifier canDonate(address donor) {
+    modifier canDonate(address donor, uint256 amount) {
         uint256 lastDonorTransaction = _lastTransaction[donor];
         require(
-            (lastDonorTransaction.addMonths(1)) <= block.timestamp,
+            lastDonorTransaction.addMonths(1) <= block.timestamp,
             "LubyCoin: You need to wait a month before donating again"
         );
         require(
-            msg.value <= 1 ether,
-            "LubyCoin: You can donate a maximum of 1 ether"
+            amount <= 1000,
+            "LubyCoin: You can donate a maximum of 1 LubyCoin"
         );
         _;
     }
@@ -87,13 +87,13 @@ contract LubyCoin is ERC20, Ownable, Pausable, TransactionLedger {
         public
         payable
         whenNotPaused
-        canDonate(_msgSender())
+        canDonate(_msgSender(), amount)
         returns (bool)
     {
         if (!_vips[_msgSender()]) {
             amount = _chargeFeeAndReturnNewAmount(amount);
         }
-
+        _lastTransaction[_msgSender()] = block.timestamp;
         return transfer(to, amount);
     }
 

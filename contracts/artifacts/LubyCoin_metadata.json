@@ -653,11 +653,11 @@
 			]
 		},
 		"contracts/lubycoin.sol": {
-			"keccak256": "0xb7ca660518525a298e659f7f9d385363f185a1eed1cc493718533e60ccdb8d28",
+			"keccak256": "0xd12443e86abc0ccef9440a77cf28be197d5ad7925139c675e1dde11020210e78",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://dc632e7e7db9d127534fa3714f4ab6c6c772e7d268a11c5bff91bfb8842fdfb9",
-				"dweb:/ipfs/QmThXjCkaUUUcs3yGETcbUb4GovyX4Cu3BincrNH6LGitu"
+				"bzz-raw://363324d32fa1bb5ee50fc32c7242329a5d5a3fb49a145ae0925da5356bf64a98",
+				"dweb:/ipfs/QmWQgXq4Spj397RToDbSMzCNuitVLzWdkzUDUUTCqBokeX"
 			]
 		}
 	},
