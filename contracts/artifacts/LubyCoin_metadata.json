@@ -323,6 +323,35 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_source",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_target",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_moment",
+						"type": "uint256"
+					}
+				],
+				"name": "recoverTransactions",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "renounceOwnership",
 				"outputs": [],
@@ -616,11 +645,11 @@
 			]
 		},
 		"contracts/TransactionLedger.sol": {
-			"keccak256": "0x14e76277907dc4954775e06b434bebe6d1ec6160209040eb8d5bd6f0e3796130",
+			"keccak256": "0xa3f0e44cd2a3e13f3f080ef8d99ce289ceef6d81e86240d5f5f6a7f59065a0f6",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6dd854ee177e7a4fadfbcf2aec13302419a3c0bc43e9269f61ff27ea5efa1ce0",
-				"dweb:/ipfs/QmbMZid8Hiqu8mWSDDshqQxnxDCJgkrYZ9NbByT9hvyoc9"
+				"bzz-raw://12246e123d53fb8296a15f8883a1798857af6676d64ff1d3054a04de217cb761",
+				"dweb:/ipfs/QmfEto1rNaDUm2ujipybkqpF4XA3RNQY7Rks2X1KXwFpmt"
 			]
 		},
 		"contracts/lubycoin.sol": {

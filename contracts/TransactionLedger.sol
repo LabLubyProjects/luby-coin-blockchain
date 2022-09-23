@@ -2,21 +2,22 @@
 pragma solidity 0.8.17;
 
 contract TransactionLedger {
-    mapping(address => mapping(address => uint256)) private _transactions;
+    mapping(address => mapping(address => mapping(uint256 => uint256)))
+        private _transactions;
 
     function recordTransaction(
         address _source,
         address _target,
         uint256 _amount
     ) internal {
-        _transactions[_source][_target] = _amount;
+        _transactions[_source][_target][block.timestamp] = _amount;
     }
 
-    function recoverTransactions(address _source)
-        internal
-        view
-        returns (mapping(address => uint256) storage)
-    {
-        return _transactions[_source];
+    function recoverTransactions(
+        address _source,
+        address _target,
+        uint256 _moment
+    ) public view returns (uint256) {
+        return _transactions[_source][_target][_moment];
     }
 }
